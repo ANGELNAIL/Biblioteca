@@ -96,7 +96,7 @@ namespace Biblioteca.Controllers
                 return BadRequest(e.Message);
             }
         }
-        public class NewBibliotecario 
+        private class NewBibliotecario 
         {
             public Int32 Id { get; set; }
             public String Contrasena { get; set; }
