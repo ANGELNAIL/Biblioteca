@@ -10,7 +10,7 @@ namespace Biblioteca.BbContext
         public DataSet Libro_Get()
         {
             DataSet oDS = new DataSet();
-            FbConnection oConn = new FbConnection("Data Source=Localhost;Initial Catalog=Biblioteca;Database=C:\\Users\\ANGEL\\source\\repos\\Biblioteca\\Biblioteca\\DataBase\\BIBLIOTECA.FDB;User Id=SYSDBA;Password=masterkey;Port=3050;Dialect=3;character set=ASCII;Role=;Packet Size=8192;ServerType=0");
+            FbConnection oConn = new FbConnection("Data Source=Localhost;Initial Catalog=Biblioteca;Database=C:\\Users\\ANGEL\\source\\repos\\Biblioteca\\Biblioteca\\DataBase\\BIBLIOTECA.FDB;User Id=SYSDBA;Password=masterkey;Port=3050;Dialect=3;charset=none ;Role=;Packet Size=8192;ServerType=0");
             try
             {
                 oConn.Open();

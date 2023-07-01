@@ -73,8 +73,10 @@ namespace Biblioteca.Controllers
                 usuario.Contrasenia = Security.RandomPassword();
                 usuario.Rol = "Bibliotecario";
                 bibliotecario.IdUsuario = await Task.Run(() => usuario.Usuario_Ins());
-                Int32 Id = bibliotecario.Bibliotecario_Ins();
-                return Ok(Id);
+                NewBibliotecario bibliotecarios = new NewBibliotecario();
+                bibliotecarios.Id = bibliotecario.Bibliotecario_Ins();
+                bibliotecarios.Contrasena = usuario.Contrasenia;
+                return Ok(bibliotecarios);
             }
             catch (Exception e)
             {
@@ -93,6 +95,11 @@ namespace Biblioteca.Controllers
             {
                 return BadRequest(e.Message);
             }
+        }
+        public class NewBibliotecario 
+        {
+            public Int32 Id { get; set; }
+            public String Contrasena { get; set; }
         }
     }
 }
