@@ -4,6 +4,8 @@ using Biblioteca.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Data;
 
 namespace Biblioteca.Controllers
@@ -12,7 +14,7 @@ namespace Biblioteca.Controllers
     [ApiController]
     public class BibliotecarioController : ControllerBase
     {
-        [HttpGet("Bibliotecario_Get"), AllowAnonymous]
+        [HttpGet("Bibliotecario_Get")]
         public async Task<IActionResult> Bibliotecario_Get()
         {
             try
@@ -76,6 +78,7 @@ namespace Biblioteca.Controllers
                 NewBibliotecario bibliotecarios = new NewBibliotecario();
                 bibliotecarios.Id = bibliotecario.Bibliotecario_Ins();
                 bibliotecarios.Contrasena = usuario.Contrasenia;
+                bibliotecarios.Usuario = usuario.Nombre;
                 return Ok(bibliotecarios);
             }
             catch (Exception e)
@@ -96,9 +99,24 @@ namespace Biblioteca.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [HttpDelete("Bibliotecario_Del")]
+        public async Task<IActionResult> Bibliotecario_Dell(Int32 Id)
+        {
+            try
+            {
+                DbBibliotecario bibliotecario = new DbBibliotecario();
+                await Task.Run(() => bibliotecario.Bibliotecario_Del(Id));
+                return Ok("Datos eliminados");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
         private class NewBibliotecario 
         {
             public Int32 Id { get; set; }
+            public String Usuario { get; set; }
             public String Contrasena { get; set; }
         }
     }
