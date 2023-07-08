@@ -112,7 +112,6 @@ namespace Biblioteca.BbContext
                                 oCommd.CommandType = CommandType.StoredProcedure;
                                 oCommd.Parameters.Add("@Celular", FbDbType.VarChar).Value = Celular;
                                 oCommd.Parameters.Add("@Telefono", FbDbType.VarChar).Value = Telefono;
-                                oCommd.Parameters.Add("@Correo", FbDbType.VarChar).Value = Correo;
                                 oCommd.Parameters.Add("@IdCliente", FbDbType.Integer).Value = IdCliente;
                                 FbDataAdapter da = new FbDataAdapter(oCommd);
                                 da.Fill(oDS, "Result");
@@ -170,7 +169,6 @@ namespace Biblioteca.BbContext
                                 oCommd.Parameters.Add("@IdContacto0", FbDbType.Integer).Value = IdContacto;
                                 oCommd.Parameters.Add("@Celular", FbDbType.VarChar).Value = Celular;
                                 oCommd.Parameters.Add("@Telefono", FbDbType.VarChar).Value = Telefono;
-                                oCommd.Parameters.Add("@Correo", FbDbType.VarChar).Value = Correo;
                                 FbDataAdapter da = new FbDataAdapter(oCommd);
                                 oCommd.ExecuteScalar();
                             }

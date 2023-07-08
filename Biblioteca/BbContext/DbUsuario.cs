@@ -29,8 +29,9 @@ namespace Biblioteca.BbContext
                             {
                                 oCommd.CommandType = CommandType.StoredProcedure;
                                 oCommd.Parameters.Add("@Nombre", FbDbType.VarChar).Value = Nombre;
-                                oCommd.Parameters.Add("@APaterno", FbDbType.VarChar).Value = Contrasenia;
-                                oCommd.Parameters.Add("@AMaterno", FbDbType.VarChar).Value = Rol;
+                                oCommd.Parameters.Add("@Contrasenia", FbDbType.VarChar).Value = Contrasenia;
+                                oCommd.Parameters.Add("@Rol", FbDbType.VarChar).Value = Rol;
+                                oCommd.Parameters.Add("@Correo", FbDbType.VarChar).Value = Correo;
                                 FbDataAdapter da = new FbDataAdapter(oCommd);
                                 da.Fill(oDS, "Result");
                                 if (!string.IsNullOrEmpty(oDS.Tables[0].Rows[0].ToString()))

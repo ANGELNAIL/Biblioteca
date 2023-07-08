@@ -27,8 +27,7 @@ namespace Biblioteca.Controllers
                         IdContacto = Convert.ToInt32(ds["IdContacto"]),
                         IdCliente = Convert.ToInt32(ds["IdCliente"]),
                         Celular = ds["Celular"].ToString(),
-                        Telefono = ds["Telefono"].ToString(),
-                        Correo = ds["Correo"].ToString()
+                        Telefono = ds["Telefono"].ToString()
                     });
                 }
                 return Ok(Contactos);
@@ -54,8 +53,7 @@ namespace Biblioteca.Controllers
                         IdContacto = Convert.ToInt32(ds["IdContacto"]),
                         IdCliente = Convert.ToInt32(ds["IdCliente"]),
                         Celular = ds["Celular"].ToString(),
-                        Telefono = ds["Telefono"].ToString(),
-                        Correo = ds["Correo"].ToString()
+                        Telefono = ds["Telefono"].ToString()
                     });
                 }
                 return Ok(Contactos);
@@ -80,8 +78,7 @@ namespace Biblioteca.Controllers
                         IdContacto = Convert.ToInt32(ds["IdContacto"]),
                         IdCliente = Convert.ToInt32(ds["IdCliente"]),
                         Celular = ds["Celular"].ToString(),
-                        Telefono = ds["Telefono"].ToString(),
-                        Correo = ds["Correo"].ToString()
+                        Telefono = ds["Telefono"].ToString()
                     });
                 }
                 return Ok(Contactos);
