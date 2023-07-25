@@ -1,12 +1,12 @@
-﻿using FirebirdSql.Data.FirebirdClient;
+﻿using Biblioteca.Models;
+using FirebirdSql.Data.FirebirdClient;
 using System.Data;
 
 namespace Biblioteca.BbContext
 {
-    public class DbContacto:Models.Contacto
+    public class DbDetallePrestamo:DetallePrestamo
     {
-        public DbContacto() { }
-        public DataSet Contacto_Get()
+        public DataSet DetallePrestamo_Get()
         {
             DataSet oDS = new DataSet();
             FbConnection oConn = new FbConnection("Data Source=Localhost;Initial Catalog=Biblioteca;Database=C:\\Users\\ANGEL\\source\\repos\\Biblioteca\\Biblioteca\\DataBase\\BIBLIOTECA.FDB;User Id=SYSDBA;Password=masterkey");
@@ -16,7 +16,7 @@ namespace Biblioteca.BbContext
                 if (oConn.State != ConnectionState.Open) { throw new Exception("No se pudo conectar con la Base de datos."); }
                 using (FbCommand oCommd = oConn.CreateCommand())
                 {
-                    oCommd.CommandText = "Contacto_Get";
+                    oCommd.CommandText = "DetallePrestamo_Get";
                     oCommd.CommandType = CommandType.StoredProcedure;
                     FbDataAdapter da = new FbDataAdapter(oCommd);
                     da.Fill(oDS, "Result");
@@ -33,7 +33,7 @@ namespace Biblioteca.BbContext
             }
             return oDS;
         }
-        public DataSet Contacto_GetById(Int32 ID)
+        public DataSet DetallePrestamo_GetById(Int32 ID)
         {
             DataSet oDS = new DataSet();
             FbConnection oConn = new FbConnection("Data Source=Localhost;Initial Catalog=Biblioteca;Database=C:\\Users\\ANGEL\\source\\repos\\Biblioteca\\Biblioteca\\DataBase\\BIBLIOTECA.FDB;User Id=SYSDBA;Password=masterkey");
@@ -43,7 +43,7 @@ namespace Biblioteca.BbContext
                 if (oConn.State != ConnectionState.Open) { throw new Exception("No se pudo conectar con la Base de datos."); }
                 using (FbCommand oCommd = oConn.CreateCommand())
                 {
-                    oCommd.CommandText = "Contacto_GetById";
+                    oCommd.CommandText = "DetallePrestamo_GetById";
                     oCommd.Parameters.Add("@ID", FbDbType.Integer).Value = ID;
                     oCommd.CommandType = CommandType.StoredProcedure;
                     FbDataAdapter da = new FbDataAdapter(oCommd);
@@ -61,7 +61,7 @@ namespace Biblioteca.BbContext
             }
             return oDS;
         }
-        public DataSet Contacto_GetByCliente(Int32 ID)
+        public DataSet DetallePrestamo_GetByCliente(Int32 ID)
         {
             DataSet oDS = new DataSet();
             FbConnection oConn = new FbConnection("Data Source=Localhost;Initial Catalog=Biblioteca;Database=C:\\Users\\ANGEL\\source\\repos\\Biblioteca\\Biblioteca\\DataBase\\BIBLIOTECA.FDB;User Id=SYSDBA;Password=masterkey");
@@ -71,7 +71,7 @@ namespace Biblioteca.BbContext
                 if (oConn.State != ConnectionState.Open) { throw new Exception("No se pudo conectar con la Base de datos."); }
                 using (FbCommand oCommd = oConn.CreateCommand())
                 {
-                    oCommd.CommandText = "Contacto_GetByCliente";
+                    oCommd.CommandText = "DetallePrestamo_GetByCliente";
                     oCommd.Parameters.Add("@ID", FbDbType.Integer).Value = ID;
                     oCommd.CommandType = CommandType.StoredProcedure;
                     FbDataAdapter da = new FbDataAdapter(oCommd);
@@ -89,9 +89,9 @@ namespace Biblioteca.BbContext
             }
             return oDS;
         }
-        public Int32 Contacto_Ins()
+        public Int32 DetallePrestamo_Ins()
         {
-            Int32 IdContacto = 0;
+            Int32 IdDetallePrestamo = 0;
             DataSet oDS = new DataSet();
             FbConnection oConn = new FbConnection("Data Source=Localhost;Initial Catalog=Biblioteca;Database=C:\\Users\\ANGEL\\source\\repos\\Biblioteca\\Biblioteca\\DataBase\\BIBLIOTECA.FDB;User Id=SYSDBA;Password=masterkey");
             using (oConn)
@@ -107,17 +107,16 @@ namespace Biblioteca.BbContext
                     {
                         try
                         {
-                            using (FbCommand oCommd = new FbCommand("Contacto_Ins", oConn, oTrans))
+                            using (FbCommand oCommd = new FbCommand("DetallePrestamo_Ins", oConn, oTrans))
                             {
                                 oCommd.CommandType = CommandType.StoredProcedure;
-                                oCommd.Parameters.Add("@Celular", FbDbType.VarChar).Value = Celular;
-                                oCommd.Parameters.Add("@Telefono", FbDbType.VarChar).Value = Telefono;
-                                oCommd.Parameters.Add("@IdCliente", FbDbType.Integer).Value = IdCliente;
+                                oCommd.Parameters.Add("@IdPrestamo", FbDbType.Integer).Value = IdPrestamo;
+                                oCommd.Parameters.Add("@IdLibro", FbDbType.Integer).Value = IdLibro;
                                 FbDataAdapter da = new FbDataAdapter(oCommd);
                                 da.Fill(oDS, "Result");
                                 if (!string.IsNullOrEmpty(oDS.Tables[0].Rows[0].ToString()))
                                 {
-                                    IdContacto = Convert.ToInt32(oDS.Tables[0].Rows[0][0].ToString());
+                                    IdDetallePrestamo = Convert.ToInt32(oDS.Tables[0].Rows[0][0].ToString());
                                 }
                                 else
                                 {
@@ -144,9 +143,9 @@ namespace Biblioteca.BbContext
                     oConn.Close();
                 }
             }
-            return IdContacto;
+            return IdDetallePrestamo;
         }
-        public void Contacto_Upd()
+        public void DetallePrestamo_Upd()
         {
             DataSet oDS = new DataSet();
             FbConnection oConn = new FbConnection("Data Source=Localhost;Initial Catalog=Biblioteca;Database=C:\\Users\\ANGEL\\source\\repos\\Biblioteca\\Biblioteca\\DataBase\\BIBLIOTECA.FDB;User Id=SYSDBA;Password=masterkey");
@@ -163,12 +162,11 @@ namespace Biblioteca.BbContext
                     {
                         try
                         {
-                            using (FbCommand oCommd = new FbCommand("Contacto_Upd", oConn, oTrans))
+                            using (FbCommand oCommd = new FbCommand("DetallePrestamo_Upd", oConn, oTrans))
                             {
                                 oCommd.CommandType = CommandType.StoredProcedure;
-                                oCommd.Parameters.Add("@IdContacto0", FbDbType.Integer).Value = IdContacto;
-                                oCommd.Parameters.Add("@Celular", FbDbType.VarChar).Value = Celular;
-                                oCommd.Parameters.Add("@Telefono", FbDbType.VarChar).Value = Telefono;
+                                oCommd.Parameters.Add("@IdPrestamo", FbDbType.Integer).Value = IdPrestamo;
+                                oCommd.Parameters.Add("@IdLibro", FbDbType.Integer).Value = IdLibro;
                                 FbDataAdapter da = new FbDataAdapter(oCommd);
                                 oCommd.ExecuteScalar();
                             }

@@ -87,6 +87,8 @@ namespace Biblioteca.BbContext
                                 oCommd.Parameters.Add("@Nombre", FbDbType.VarChar).Value = Nombre;
                                 oCommd.Parameters.Add("@APaterno", FbDbType.VarChar).Value = APaterno;
                                 oCommd.Parameters.Add("@AMaterno", FbDbType.VarChar).Value = AMaterno;
+                                oCommd.Parameters.Add("@Telefono", FbDbType.VarChar).Value = Telefono;
+                                oCommd.Parameters.Add("@Celular", FbDbType.VarChar).Value = Celular;
                                 oCommd.Parameters.Add("@IdUsuario", FbDbType.Integer).Value = IdUsuario;
                                 FbDataAdapter da = new FbDataAdapter(oCommd);
                                 da.Fill(oDS, "Result");
@@ -145,6 +147,8 @@ namespace Biblioteca.BbContext
                                 oCommd.Parameters.Add("@Nombre", FbDbType.VarChar).Value = Nombre;
                                 oCommd.Parameters.Add("@APaterno", FbDbType.VarChar).Value = APaterno;
                                 oCommd.Parameters.Add("@AMaterno", FbDbType.VarChar).Value = AMaterno;
+                                oCommd.Parameters.Add("@Telefono", FbDbType.VarChar).Value = Telefono;
+                                oCommd.Parameters.Add("@Celular", FbDbType.VarChar).Value = Celular;
                                 FbDataAdapter da = new FbDataAdapter(oCommd);                               
                                 oCommd.ExecuteScalar();
                             }
@@ -162,6 +166,51 @@ namespace Biblioteca.BbContext
                 {
                     oConn.Close();
                     //throw ex;
+                }
+                finally
+                {
+                    oConn.Close();
+                }
+            }
+        }
+        public void Cliente_Del(Int32 ID)
+        {
+            DataSet oDS = new DataSet();
+            FbConnection oConn = new FbConnection("Data Source=Localhost;Initial Catalog=Biblioteca;Database=C:\\Users\\ANGEL\\source\\repos\\Biblioteca\\Biblioteca\\DataBase\\BIBLIOTECA.FDB;User Id=SYSDBA;Password=masterkey");
+            using (oConn)
+            {
+                try
+                {
+                    oConn.Open();
+                    if (oConn.State != ConnectionState.Open)
+                    {
+                        throw new Exception("No se pudo conectar con la Base de Datos.");
+                    }
+                    using (FbTransaction oTrans = oConn.BeginTransaction())
+                    {
+                        try
+                        {
+                            using (FbCommand oCommd = new FbCommand("Cliente_Del", oConn, oTrans))
+                            {
+                                oCommd.CommandType = CommandType.StoredProcedure;
+                                oCommd.Parameters.Add("@ID", FbDbType.Integer).Value = ID;
+                                FbDataAdapter da = new FbDataAdapter(oCommd);
+                                oCommd.ExecuteScalar();
+                            }
+                            oTrans.Commit();
+                            oConn.Close();
+                        }
+                        catch (System.Exception ex)
+                        {
+                            oTrans.Rollback();
+                            throw ex;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    oConn.Close();
+                    throw ex;
                 }
                 finally
                 {

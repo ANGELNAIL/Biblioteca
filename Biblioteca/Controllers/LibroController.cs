@@ -175,5 +175,34 @@ namespace Biblioteca.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [HttpPut("Libro_Del")]
+        public async Task<IActionResult> Libro_Del(Int32 Id)
+        {
+            try
+            {
+                DbLibro Libro = new DbLibro();
+                await Task.Run(() => Libro.Libro_Del(Id));
+                return Ok("Datos eliminados");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpPut("Libro_UpdStock")]
+        public async Task<IActionResult> Libro_UpdStock(Int32 IdLibro, Int32 LibrosExtra)
+        {
+            try
+            {
+                DbLibro Libro = new DbLibro();
+                await Task.Run(() => Libro.Libro_UpdStock(IdLibro, LibrosExtra));
+                return Ok("Datos Actualizados");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
     }
 }

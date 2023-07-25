@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
+using System.Text.Json;
+using System.Xml;
 
 namespace Biblioteca.Controllers
 {
@@ -27,7 +29,9 @@ namespace Biblioteca.Controllers
                         IdCliente = Convert.ToInt32(ds["IdCliente"]),
                         Nombre = ds["Nombre"].ToString(),
                         APaterno = ds["APaterno"].ToString(),
-                        AMaterno = ds["AMaterno"].ToString()
+                        AMaterno = ds["AMaterno"].ToString(),
+                        Celular = ds["Celular"].ToString(),
+                        Telefono = ds["Telefono"].ToString()
                     });
                 }
                 return Ok(Clientes);
@@ -53,7 +57,9 @@ namespace Biblioteca.Controllers
                         IdCliente = Convert.ToInt32(ds["IdCliente"]),
                         Nombre = ds["Nombre"].ToString(),
                         APaterno = ds["APaterno"].ToString(),
-                        AMaterno = ds["AMaterno"].ToString()
+                        AMaterno = ds["AMaterno"].ToString(),
+                        Telefono = ds["Telefono"].ToString(),
+                        Celular = ds["Celular"].ToString()
                     });
                 }
                 return Ok(Clientes);
@@ -68,11 +74,12 @@ namespace Biblioteca.Controllers
         {
             try
             {
-                DbUsuario usuario = new DbUsuario();
-                usuario.Nombre = Cliente.Nombre + Cliente.APaterno + Cliente.AMaterno;
-                usuario.Contrasenia = Security.RandomPassword();
-                usuario.Rol = "Usuario";
-                Cliente.IdUsuario = await Task.Run(() => usuario.Usuario_Ins());
+                DbUsuario Usuario = new DbUsuario();
+                Usuario.Nombre = Cliente.NombreU;
+                Usuario.Contrasenia = Cliente.Contrasenia;
+                Usuario.Correo = Cliente.Correo;
+                Usuario.Rol = "Usuario";
+                Cliente.IdUsuario = await Task.Run(() => Usuario.Usuario_Ins());
                 Int32 Id = Cliente.Cliente_Ins();
                 return Ok(Id);
             }
@@ -88,6 +95,20 @@ namespace Biblioteca.Controllers
             {
                 await Task.Run(() => Cliente.Cliente_Upd());
                 return Ok("Datos Actualizados");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpPut("Cliente_Del")]
+        public async Task<IActionResult> Cliente_Del(Int32 Id)
+        {
+            try
+            {
+                DbCliente cliente = new DbCliente();
+                await Task.Run(() => cliente.Cliente_Del(Id));
+                return Ok("Datos eliminados");
             }
             catch (Exception e)
             {

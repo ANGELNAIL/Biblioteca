@@ -29,8 +29,9 @@ namespace Biblioteca.Controllers
                         IdBibliotecario = Convert.ToInt32(ds["IdBibliotecario"]),
                         Nombre = ds["Nombre"].ToString(),
                         APaterno = ds["APaterno"].ToString(),
-                        AMaterno = ds["AMaterno"].ToString()
-                    });
+                        AMaterno = ds["AMaterno"].ToString(),
+                        IdUsuario =Convert.ToInt32(ds["IdUsuario"])
+                        });
                 }
                 return Ok(bibliotecarios);
 
@@ -99,8 +100,8 @@ namespace Biblioteca.Controllers
                 return BadRequest(e.Message);
             }
         }
-        [HttpDelete("Bibliotecario_Del")]
-        public async Task<IActionResult> Bibliotecario_Dell(Int32 Id)
+        [HttpPut("Bibliotecario_Del")]
+        public async Task<IActionResult> Bibliotecario_Del(Int32 Id)
         {
             try
             {

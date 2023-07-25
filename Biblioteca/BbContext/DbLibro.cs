@@ -301,5 +301,50 @@ namespace Biblioteca.BbContext
                 }
             }
         }
+        public void Libro_Del(Int32 ID)
+        {
+            DataSet oDS = new DataSet();
+            FbConnection oConn = new FbConnection("Data Source=Localhost;Initial Catalog=Biblioteca;Database=C:\\Users\\ANGEL\\source\\repos\\Biblioteca\\Biblioteca\\DataBase\\BIBLIOTECA.FDB;User Id=SYSDBA;Password=masterkey");
+            using (oConn)
+            {
+                try
+                {
+                    oConn.Open();
+                    if (oConn.State != ConnectionState.Open)
+                    {
+                        throw new Exception("No se pudo conectar con la Base de Datos.");
+                    }
+                    using (FbTransaction oTrans = oConn.BeginTransaction())
+                    {
+                        try
+                        {
+                            using (FbCommand oCommd = new FbCommand("Libro_Del", oConn, oTrans))
+                            {
+                                oCommd.CommandType = CommandType.StoredProcedure;
+                                oCommd.Parameters.Add("@ID", FbDbType.Integer).Value = ID;
+                                FbDataAdapter da = new FbDataAdapter(oCommd);
+                                oCommd.ExecuteScalar();
+                            }
+                            oTrans.Commit();
+                            oConn.Close();
+                        }
+                        catch (System.Exception ex)
+                        {
+                            oTrans.Rollback();
+                            throw ex;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    oConn.Close();
+                    throw ex;
+                }
+                finally
+                {
+                    oConn.Close();
+                }
+            }
+        }
     }
 }
